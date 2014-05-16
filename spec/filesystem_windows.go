@@ -9,6 +9,11 @@ import (
 	. "github.com/mackerelio/mackerel-agent/util"
 )
 
+var dfColumnSpecs = []struct {
+	name  string
+	isInt bool // type of collected data  true: int64, false: string
+}{}
+
 func (g *FilesystemGenerator) Generate() (interface{}, error) {
 	filesystems := make(map[string]map[string]interface{})
 

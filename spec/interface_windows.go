@@ -40,3 +40,11 @@ func (g *InterfaceGenerator) Generate() (interface{}, error) {
 
 	return results, nil
 }
+
+func (g *InterfaceGenerator) GenerateByIpCommand() (map[string]map[string]interface{}, error) {
+	return nil, nil
+}
+
+func (g *InterfaceGenerator) GenerateByIfconfigCommand() (map[string]map[string]interface{}, error) {
+	return nil, nil
+}
