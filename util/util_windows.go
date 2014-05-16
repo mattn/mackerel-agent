@@ -2,6 +2,7 @@ package util
 
 import (
 	"errors"
+	"os"
 	"syscall"
 	"unsafe"
 )
@@ -59,6 +60,7 @@ var (
 
 	RegGetValue                 = modadvapi32.NewProc("RegGetValueW")
 	GetSystemInfo               = modkernel32.NewProc("GetSystemInfo")
+	GetTickCount                = modkernel32.NewProc("GetTickCount")
 	GetDiskFreeSpaceEx          = modkernel32.NewProc("GetDiskFreeSpaceExW")
 	GetLogicalDriveStrings      = modkernel32.NewProc("GetLogicalDriveStringsW")
 	GetDriveType                = modkernel32.NewProc("GetDriveTypeW")
@@ -151,3 +153,29 @@ func CreateCounter(query syscall.Handle, k, v string) (*CounterInfo, error) {
 		Counter:     counter,
 	}, nil
 }
+
+func GetAdapterList() (*syscall.IpAdapterInfo, error) {
+	b := make([]byte, 1000)
+	l := uint32(len(b))
+	a := (*syscall.IpAdapterInfo)(unsafe.Pointer(&b[0]))
+	err := syscall.GetAdaptersInfo(a, &l)
+	if err == syscall.ERROR_BUFFER_OVERFLOW {
+		b = make([]byte, l)
+		a = (*syscall.IpAdapterInfo)(unsafe.Pointer(&b[0]))
+		err = syscall.GetAdaptersInfo(a, &l)
+	}
+	if err != nil {
+		return nil, os.NewSyscallError("GetAdaptersInfo", err)
+	}
+	return a, nil
+}
+
+func BytePtrToString(p *uint8) string {
+	a := (*[10000]uint8)(unsafe.Pointer(p))
+	i := 0
+	for a[i] != 0 {
+		i++
+	}
+	return string(a[:i])
+}
+
