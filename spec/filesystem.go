@@ -11,4 +11,4 @@ func (g *FilesystemGenerator) Key() string {
 	return "filesystem"
 }
 
-var logger = logging.GetLogger("spec.filesystem")
+var filesystemLogger = logging.GetLogger("spec.filesystem")
