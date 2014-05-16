@@ -10,7 +10,8 @@ func TestInterfaceGenerator(t *testing.T) {
 		t.Skip("The OS seems to be Fedora. Skipping interface test for now")
 	}
 
-	g := &InterfaceGenerator{1}
+	g := new(InterfaceGenerator)
+	g.Interval = 1
 	values, err := g.Generate()
 	if err != nil {
 		t.Error("should not raise error")
