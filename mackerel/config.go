@@ -62,14 +62,6 @@ type PluginConfig struct {
 	Command string
 }
 
-var DefaultConfig = &Config{
-	Apibase: "https://mackerel.io",
-	Root:    "/var/lib/mackerel-agent",
-	Pidfile: "/var/run/mackerel-agent.pid",
-	Roles:   []string{},
-	Verbose: false,
-}
-
 func LoadConfig(conffile string) (Config, error) {
 	config, err := LoadConfigFile(conffile)
 
