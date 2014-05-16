@@ -11,9 +11,8 @@ import (
 )
 
 func resolveConfig() (config mackerel.Config) {
-	conffile := flag.String("conf", "/etc/mackerel-agent/mackerel-agent.conf", "Config file path (Configs in this file are over-written by command line options)")
+	conffile := flag.String("conf", "./mackerel-agent.conf", "Config file path (Configs in this file are over-written by command line options)")
 	apibase := flag.String("apibase", mackerel.DefaultConfig.Apibase, "API base")
-	pidfile := flag.String("pidfile", mackerel.DefaultConfig.Pidfile, "File containing PID")
 	root := flag.String("root", mackerel.DefaultConfig.Root, "Directory containing variable state information")
 	apikey := flag.String("apikey", "", "API key from mackerel.io web site")
 
@@ -41,8 +40,6 @@ func resolveConfig() (config mackerel.Config) {
 			config.Apibase = *apibase
 		case "apikey":
 			config.Apikey = *apikey
-		case "pidfile":
-			config.Pidfile = *pidfile
 		case "root":
 			config.Root = *root
 		case "verbose", "v":
