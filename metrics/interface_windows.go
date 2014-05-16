@@ -13,7 +13,7 @@ import (
 
 type InterfaceGenerator struct {
 	Interval time.Duration
-	query   syscall.Handle
+	query    syscall.Handle
 	counters []*CounterInfo
 }
 

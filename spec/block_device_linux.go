@@ -49,4 +49,3 @@ func (g *BlockDeviceGenerator) Generate() (interface{}, error) {
 
 	return results, nil
 }
-

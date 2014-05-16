@@ -8,7 +8,7 @@ import (
 )
 
 type Loadavg5Generator struct {
-	query   syscall.Handle
+	query    syscall.Handle
 	counters []*CounterInfo
 }
 

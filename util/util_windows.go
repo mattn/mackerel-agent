@@ -178,4 +178,3 @@ func BytePtrToString(p *uint8) string {
 	}
 	return string(a[:i])
 }
-

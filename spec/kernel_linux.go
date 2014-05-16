@@ -28,4 +28,3 @@ func (g *KernelGenerator) Generate() (interface{}, error) {
 
 	return results, nil
 }
-

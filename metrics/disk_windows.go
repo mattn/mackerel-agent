@@ -11,7 +11,7 @@ import (
 
 type DiskGenerator struct {
 	Interval time.Duration
-	query   syscall.Handle
+	query    syscall.Handle
 	counters []*CounterInfo
 }
 
