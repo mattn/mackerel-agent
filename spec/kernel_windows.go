@@ -2,26 +2,28 @@ package spec
 
 import (
 	"unsafe"
+
+	. "github.com/mackerelio/mackerel-agent/util"
 )
 
 func (g *KernelGenerator) Generate() (interface{}, error) {
 	results := make(map[string]string)
 
-	name, err := regGetString(
+	name, err := RegGetString(
 		HKEY_LOCAL_MACHINE,
 		`Software\Microsoft\Windows NT\CurrentVersion`,
 		`ProductName`)
 	if err != nil {
 		return nil, err
 	}
-	version, err := regGetString(
+	version, err := RegGetString(
 		HKEY_LOCAL_MACHINE,
 		`Software\Microsoft\Windows NT\CurrentVersion`,
 		`CurrentVersion`)
 	if err != nil {
 		return nil, err
 	}
-	release, err := regGetString(
+	release, err := RegGetString(
 		HKEY_LOCAL_MACHINE,
 		`Software\Microsoft\Windows NT\CurrentVersion`,
 		`CSDVersion`)
@@ -35,7 +37,7 @@ func (g *KernelGenerator) Generate() (interface{}, error) {
 	results["release"] = release
 
 	var systemInfo SYSTEM_INFO
-	procGetSystemInfo.Call(uintptr(unsafe.Pointer(&systemInfo)))
+	GetSystemInfo.Call(uintptr(unsafe.Pointer(&systemInfo)))
 	switch systemInfo.ProcessorArchitecture {
 	case 0:
 		results["machine"] = "x86"
