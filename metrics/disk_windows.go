@@ -60,7 +60,14 @@ func (g *DiskGenerator) Generate() (Values, error) {
 			}
 		}
 
+		r, _, err = PdhCollectQueryData.Call(uintptr(g.query))
+		if r != 0 {
+			return nil, err
+		}
 	}
+
+	interval := g.Interval * time.Second
+	time.Sleep(interval)
 
 	r, _, err := PdhCollectQueryData.Call(uintptr(g.query))
 	if r != 0 {
