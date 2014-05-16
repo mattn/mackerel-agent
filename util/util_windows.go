@@ -119,3 +119,35 @@ func RegGetString(hKey uint32, subKey string, value string) (string, error) {
 
 	return syscall.UTF16ToString(buf), nil
 }
+
+type CounterInfo struct {
+	PostName    string
+	CounterName string
+	Counter     syscall.Handle
+}
+
+func CreateQuery() (syscall.Handle, error) {
+	var query syscall.Handle
+	r, _, err := PdhOpenQuery.Call(0, 0, uintptr(unsafe.Pointer(&query)))
+	if r != 0 {
+		return 0, err
+	}
+	return query, nil
+}
+
+func CreateCounter(query syscall.Handle, k, v string) (*CounterInfo, error) {
+	var counter syscall.Handle
+	r, _, err := PdhAddCounter.Call(
+		uintptr(query),
+		uintptr(unsafe.Pointer(syscall.StringToUTF16Ptr(v))),
+		0,
+		uintptr(unsafe.Pointer(&counter)))
+	if r != 0 {
+		return nil, err
+	}
+	return &CounterInfo{
+		PostName:    k,
+		CounterName: v,
+		Counter:     counter,
+	}, nil
+}
