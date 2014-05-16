@@ -1,7 +1,6 @@
 package metrics
 
 import (
-	"errors"
 	"time"
 )
 
@@ -10,5 +9,9 @@ type CpuusageGenerator struct {
 }
 
 func (g *CpuusageGenerator) Generate() (Values, error) {
-	return nil, errors.New("Not Implemented")
+	interval := g.Interval * time.Second
+	time.Sleep(interval)
+
+	// TODO
+	return Values{}, nil
 }
